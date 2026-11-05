@@ -102,7 +102,9 @@
     h2 { font-size: 9pt; margin-bottom: 6pt; }
     li { margin-bottom: 2pt; }
     .skills { grid-template-columns: 150px 1fr; gap: 1pt 12px; }
-    .job { margin-bottom: 10pt; }
+    .job { margin-bottom: 10pt; break-inside: auto; }
+    .job-head, .context { break-after: avoid; }
+    li, .skills dd { break-inside: avoid; }
     .job-head h3 { font-size: 11pt; }
     .role h4 { font-size: 10pt; }
     .dates { font-size: 9.6pt; }
@@ -126,28 +128,30 @@
 
 <section>
   <h2>Summary</h2>
-  <p>Tech lead and cloud engineer with 20+ years building software and over a decade leading teams of 6–15 engineers. Modernized a legacy .NET Framework 2.0 platform (~10M lines of code, tens of millions of users) to .NET 10, cutting deployments from 1 hour to 5 minutes. Architected a multi-tenant AWS SaaS built to scale to 2,000 tenants, and now building a full ERP on a 9-month plan with an AI-native, spec-driven workflow. The go-to person for root-causing production hangs and memory leaks in .NET applications. Earned 8 AWS certifications, including Solutions Architect and DevOps Engineer – Professional.</p>
+  <p>Tech lead and cloud engineer with 20+ years building software and over a decade leading teams of 6–15 engineers. Modernized a legacy .NET Framework 2.0 platform (~10M lines of code, tens of millions of users) to .NET 10, cutting deployments from 1 hour to 5 minutes. Architected a multi-tenant AWS SaaS built to scale to 2,000 tenants with cross-region disaster recovery, and now building a full ERP on a 9-month plan with an AI-native, spec-driven workflow. The go-to person for root-causing production hangs and memory leaks in .NET applications. Earned 8 AWS certifications, including Solutions Architect and DevOps Engineer – Professional.</p>
 </section>
 
 <section>
   <h2>Skills</h2>
   <dl class="skills">
-    <dt>Cloud</dt>
-    <dd>AWS (ECS Fargate, EC2/Auto Scaling, VPC, RDS/Aurora, SQS, Route 53, CloudFront, Security Hub, GuardDuty), Google Cloud Platform</dd>
-    <dt>IaC &amp; containers</dt>
-    <dd>AWS CDK, CloudFormation, Docker, Docker Swarm, Kubernetes</dd>
-    <dt>CI/CD</dt>
-    <dd>GitLab CI, Jenkins, AWS CodeBuild · Blue/green deployment · Automated backup &amp; restore</dd>
-    <dt>Architecture</dt>
-    <dd>Multi-tenant SaaS, microservices, disaster recovery, 3-tier network architecture, cost optimization (AWS Well-Architected), zero-trust networking</dd>
-    <dt>Software</dt>
-    <dd>.NET (Framework 2.0 → .NET 10), C#, ASP.NET MVC, Next.js, TypeScript, React, Angular, PostgreSQL, SQL Server, Redis, RabbitMQ</dd>
-    <dt>Diagnostics</dt>
-    <dd>WinDbg, dotnet-dump, JetBrains dotMemory, performance profilers · server hangs, memory leaks</dd>
-    <dt>Quality</dt>
-    <dd>TDD, unit / integration / end-to-end testing, Robot Framework, static analysis</dd>
+    <dt>Cloud architecture</dt>
+    <dd>Multi-tenant SaaS on AWS and GCP · Multi-AZ high availability · pilot-light cross-region DR (RTO 2 h, RPO 5 min) · auto-scaling on custom metrics · microservices</dd>
+    <dt>Networking &amp; security</dt>
+    <dd>VPC design, 3-tier networks, Route 53, CloudFront, TLS · least-privilege IAM, per-environment AWS accounts, Secrets Manager, SSM Parameter Store · Security Hub, GuardDuty, Inspector</dd>
+    <dt>Infrastructure as code</dt>
+    <dd>AWS CDK, CloudFormation · multi-environment stacks (DEV/UAT/PROD), drift elimination, automated AMI baking</dd>
+    <dt>Containers &amp; compute</dt>
+    <dd>Amazon ECS (Fargate, Fargate Spot), Amazon EKS, Docker, Docker Swarm, EC2 Auto Scaling, AWS Lambda</dd>
+    <dt>Release engineering</dt>
+    <dd>GitLab CI, Jenkins, AWS CodeBuild, ECR · blue/green deployments, rollback to the previous image in ~3 min, automated backup &amp; restore</dd>
+    <dt>Observability &amp; incidents</dt>
+    <dd>OpenTelemetry, CloudWatch, Sentry · root-causing .NET hangs and memory leaks with WinDbg, dotnet-dump, dotMemory</dd>
+    <dt>Cost optimization</dt>
+    <dd>Fargate Spot for background services, Lambda for small jobs, Auto Scaling sized to demand, AWS Well-Architected</dd>
+    <dt>Software &amp; quality</dt>
+    <dd>.NET (Framework 2.0 → .NET 10), C#, Next.js, TypeScript, React, Angular, PostgreSQL, SQL Server, Redis, RabbitMQ · TDD, unit / integration / e2e testing</dd>
     <dt>AI-assisted delivery</dt>
-    <dd>Claude Code, custom agent skills, spec-driven development (Spec Kit, OpenSpec, BMAD Method)</dd>
+    <dd>Claude Code, custom agent skills, spec-driven development (Spec Kit, OpenSpec, BMAD Method) · Bash and Python automation</dd>
     <dt>Leadership</dt>
     <dd>Hiring, mentoring, engineering culture, Git &amp; development workflows, Agile (PMI-ACP)</dd>
   </dl>
@@ -177,12 +181,13 @@
     </div>
     <p class="context">Compliance-management SaaS for regulated industries. Owned both solution architecture and DevOps for a greenfield platform, working directly with the CTO.</p>
     <ul>
-      <li>Proposed the architecture and built the entire AWS infrastructure for a multi-tenant SaaS designed to scale to 2,000 tenants (20 live), with strict tenant data isolation across DEV, UAT and PROD.</li>
-      <li>Designed for reliability with weekly production releases: blue/green deployments, disaster recovery, RDS/Aurora Multi-AZ failover, read replicas and automated backups.</li>
-      <li>Kept running costs sized to today’s 20 tenants while staying ready to scale 100× without re-architecture, in line with the AWS Well-Architected Framework.</li>
-      <li>Provisioned all infrastructure as code with AWS CDK and CloudFormation, eliminating configuration drift; automated AMI baking for EC2 Auto Scaling fleets.</li>
-      <li>Ran containerized workloads on ECS Fargate, Docker and Kubernetes, auto-scaling on custom metrics (SQS queue depth, concurrent requests); CI/CD with AWS CodeBuild and ECR.</li>
-      <li>Built a zero-trust network (private subnets, VPC endpoints, NACLs, least-privilege security groups) with continuous compliance monitoring via Security Hub, GuardDuty, Inspector, AWS Config and CloudTrail.</li>
+      <li>Proposed the architecture and built the entire AWS infrastructure for a multi-tenant SaaS designed to scale to 2,000 tenants (20 live), with strict tenant data isolation and a separate AWS account per environment (DEV, UAT, PROD).</li>
+      <li>Designed for failure: Multi-AZ RDS/Aurora with read replicas, plus a pilot-light disaster-recovery setup with cross-region backups — RTO 2 hours, RPO 5 minutes.</li>
+      <li>Shipped weekly with blue/green deployments; a bad release rolls back to the previous image in about 3 minutes.</li>
+      <li>Matched cost to real demand while staying ready to scale 100×: Fargate Spot for background services, Lambda for small jobs, Auto Scaling sized to load and scaling on custom metrics (SQS queue depth, concurrent requests).</li>
+      <li>Codified all infrastructure in AWS CDK and CloudFormation, eliminating configuration drift; ran workloads on ECS Fargate and EKS, built through AWS CodeBuild and ECR.</li>
+      <li>Secured the platform with least-privilege IAM roles, Secrets Manager and SSM Parameter Store, a zero-trust VPC (private subnets, VPC endpoints, NACLs) and continuous compliance monitoring via Security Hub, GuardDuty, Inspector, AWS Config and CloudTrail.</li>
+      <li>Built observability with OpenTelemetry and CloudWatch.</li>
     </ul>
   </article>
 
@@ -201,7 +206,7 @@
       <ul>
         <li>Led the modernization of dozens of legacy systems from .NET Framework 2.0 to .NET 10 through continuous refactoring and framework upgrades.</li>
         <li>Replaced manual, lead-only releases (remote server login, manual backup/deploy/restore) with fully automated CI/CD — first on Jenkins, later migrated to GitLab CI — cutting each deployment from 1 hour to 5 minutes; every merged request now deploys automatically, with automated backup and easy restore.</li>
-        <li>Go-to engineer for production incidents: root-caused server hangs and memory leaks in .NET applications using WinDbg, dotnet-dump, dotMemory and profilers.</li>
+        <li>Go-to engineer for production incidents: tracked errors with Sentry and root-caused server hangs and memory leaks in .NET applications using WinDbg, dotnet-dump, dotMemory and profilers.</li>
         <li>Owned the company-wide shared libraries — data access (SQL Server, Redis), logging and messaging (RabbitMQ) — and the services enabling applications to run within a 3-tier network architecture.</li>
         <li>Grew an engineering culture of TDD and automated testing on a legacy codebase, with quality gates (static analysis, coverage, Robot Framework tests) on every commit.</li>
         <li>Ran workloads on Docker, Docker Swarm and Kubernetes, and built AWS infrastructure from scratch (VPC, EC2, Auto Scaling, ALB, CloudFormation, Route 53, CloudWatch).</li>
